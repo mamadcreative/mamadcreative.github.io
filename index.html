@@ -3,18 +3,54 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Selamat Datang di GitHub Saya</title>
+  <title>Selamat Datang</title>
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background: linear-gradient(to right, #1f4037, #99f2c8);
       color: #fff;
+      margin: 0;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* Loading Screen */
+    #loadingScreen {
+      position: fixed;
+      background-color: #1f4037;
+      color: #fff;
+      width: 100%;
+      height: 100%;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+
+    .loader {
+      border: 8px solid #f3f3f3;
+      border-top: 8px solid #99f2c8;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      animation: spin 1s linear infinite;
+      margin-bottom: 1em;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Content */
+    #mainContent {
+      display: none;
+      height: 100%;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      height: 100vh;
-      margin: 0;
       text-align: center;
     }
 
@@ -43,7 +79,7 @@
       background-color: #e0e0e0;
     }
 
-    /* Modal styles */
+    /* Modal pop-up */
     .modal {
       position: fixed;
       top: 0;
@@ -86,14 +122,24 @@
   </style>
 </head>
 <body>
-  <h1>🎉 Selamat Datang!</h1>
-  <p>Terima kasih telah mampir ke halaman GitHub saya. Santai dulu sambil dengerin musik 🎶</p>
-  <a href="https://github.com/mamadcreative" target="_blank">
-    <button class="button">Lihat Profil Saya</button>
-  </a>
 
-  <!-- Modal pop-up -->
-  <div class="modal" id="musicModal">
+  <!-- Loading screen -->
+  <div id="loadingScreen">
+    <div class="loader"></div>
+    <p>Memuat halaman...</p>
+  </div>
+
+  <!-- Konten utama -->
+  <div id="mainContent">
+    <h1>🎉 Selamat Datang!</h1>
+    <p>Terima kasih telah mampir ke halaman GitHub saya. Santai dulu sambil dengerin musik 🎶</p>
+    <a href="https://github.com/mamadcreative" target="_blank">
+      <button class="button">Lihat Profil Saya</button>
+    </a>
+  </div>
+
+  <!-- Modal musik -->
+  <div class="modal" id="musicModal" style="display: none;">
     <div class="modal-content">
       <h2>Putar Musik Latar?</h2>
       <p>Klik tombol di bawah ini untuk mulai musik 🎧</p>
@@ -101,13 +147,21 @@
     </div>
   </div>
 
-  <!-- Audio player -->
+  <!-- Audio -->
   <audio id="bgMusic" loop>
     <source src="music.mp3" type="audio/mpeg" />
-    Browser kamu tidak mendukung audio 😢
   </audio>
 
   <script>
+    // Simulasi loading selama 3 detik
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        document.getElementById('loadingScreen').style.display = 'none';
+        document.getElementById('mainContent').style.display = 'flex';
+        document.getElementById('musicModal').style.display = 'flex';
+      }, 3000); // Durasi loading (ms)
+    });
+
     function startMusic() {
       const music = document.getElementById('bgMusic');
       music.play();
