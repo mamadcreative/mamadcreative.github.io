@@ -14,11 +14,10 @@
       overflow: hidden;
     }
 
-    /* Loading Screen */
+    /* Loading */
     #loadingScreen {
       position: fixed;
       background-color: #1f4037;
-      color: #fff;
       width: 100%;
       height: 100%;
       z-index: 1000;
@@ -43,7 +42,56 @@
       100% { transform: rotate(360deg); }
     }
 
-    /* Content */
+    /* PIN screen */
+    #pinScreen {
+      display: none;
+      position: fixed;
+      background: rgba(0, 0, 0, 0.8);
+      width: 100%;
+      height: 100%;
+      z-index: 999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .pin-box {
+      background: white;
+      color: #1f4037;
+      padding: 2em;
+      border-radius: 12px;
+      text-align: center;
+    }
+
+    .pin-box input {
+      padding: 10px;
+      font-size: 1.2rem;
+      margin-bottom: 1em;
+      width: 100%;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+
+    .pin-box button {
+      padding: 10px 20px;
+      background-color: #1f4037;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .pin-box button:hover {
+      background-color: #16332b;
+    }
+
+    .error {
+      color: red;
+      font-size: 0.9rem;
+      margin-top: 0.5em;
+    }
+
+    /* Konten utama */
     #mainContent {
       display: none;
       height: 100%;
@@ -79,7 +127,7 @@
       background-color: #e0e0e0;
     }
 
-    /* Modal pop-up */
+    /* Modal musik */
     .modal {
       position: fixed;
       top: 0;
@@ -87,10 +135,10 @@
       right: 0;
       bottom: 0;
       background: rgba(0, 0, 0, 0.7);
-      display: flex;
+      display: none;
       align-items: center;
       justify-content: center;
-      z-index: 999;
+      z-index: 998;
     }
 
     .modal-content {
@@ -100,10 +148,6 @@
       text-align: center;
       color: #1f4037;
       max-width: 400px;
-    }
-
-    .modal-content h2 {
-      margin-bottom: 1em;
     }
 
     .modal-content button {
@@ -129,6 +173,26 @@
     <p>Memuat halaman...</p>
   </div>
 
+  <!-- PIN input -->
+  <div id="pinScreen">
+    <div class="pin-box">
+      <h2>Masukkan PIN untuk lanjut</h2>
+      <input type="password" id="pinInput" placeholder="Masukkan PIN" />
+      <br />
+      <button onclick="checkPin()">Submit</button>
+      <div class="error" id="pinError"></div>
+    </div>
+  </div>
+
+  <!-- Modal musik -->
+  <div class="modal" id="musicModal">
+    <div class="modal-content">
+      <h2>Putar Musik Latar?</h2>
+      <p>Klik tombol di bawah ini untuk mulai musik 🎧</p>
+      <button onclick="startMusic()">Play Musik</button>
+    </div>
+  </div>
+
   <!-- Konten utama -->
   <div id="mainContent">
     <h1>🎉 Selamat Datang!</h1>
@@ -138,34 +202,36 @@
     </a>
   </div>
 
-  <!-- Modal musik -->
-  <div class="modal" id="musicModal" style="display: none;">
-    <div class="modal-content">
-      <h2>Putar Musik Latar?</h2>
-      <p>Klik tombol di bawah ini untuk mulai musik 🎧</p>
-      <button onclick="startMusic()">Play Musik</button>
-    </div>
-  </div>
-
-  <!-- Audio -->
+  <!-- Musik -->
   <audio id="bgMusic" loop>
     <source src="music.mp3" type="audio/mpeg" />
   </audio>
 
   <script>
-    // Simulasi loading selama 3 detik
     window.addEventListener('load', () => {
       setTimeout(() => {
         document.getElementById('loadingScreen').style.display = 'none';
-        document.getElementById('mainContent').style.display = 'flex';
-        document.getElementById('musicModal').style.display = 'flex';
-      }, 3000); // Durasi loading (ms)
+        document.getElementById('pinScreen').style.display = 'flex';
+      }, 3000); // durasi loading
     });
+
+    function checkPin() {
+      const pin = document.getElementById('pinInput').value;
+      const error = document.getElementById('pinError');
+      if (pin === '180404') {
+        document.getElementById('pinScreen').style.display = 'none';
+        document.getElementById('musicModal').style.display = 'flex';
+        error.textContent = '';
+      } else {
+        error.textContent = 'PIN salah! Coba lagi.';
+      }
+    }
 
     function startMusic() {
       const music = document.getElementById('bgMusic');
       music.play();
       document.getElementById('musicModal').style.display = 'none';
+      document.getElementById('mainContent').style.display = 'flex';
     }
   </script>
 </body>
