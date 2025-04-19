@@ -14,7 +14,6 @@
       overflow: hidden;
     }
 
-    /* Loading */
     #loadingScreen {
       position: fixed;
       background-color: #1f4037;
@@ -42,7 +41,6 @@
       100% { transform: rotate(360deg); }
     }
 
-    /* PIN screen */
     #pinScreen {
       display: none;
       position: fixed;
@@ -91,7 +89,6 @@
       margin-top: 0.5em;
     }
 
-    /* Konten utama */
     #mainContent {
       display: none;
       height: 100%;
@@ -127,7 +124,6 @@
       background-color: #e0e0e0;
     }
 
-    /* Modal musik */
     .modal {
       position: fixed;
       top: 0;
@@ -177,7 +173,13 @@
   <div id="pinScreen">
     <div class="pin-box">
       <h2>Masukkan PIN untuk lanjut</h2>
-      <input type="password" id="pinInput" placeholder="Masukkan PIN" />
+      <input 
+        type="password" 
+        id="pinInput" 
+        placeholder="Masukkan PIN" 
+        maxlength="8" 
+        oninput="limitInputLength(this)"
+      />
       <br />
       <button onclick="checkPin()">Submit</button>
       <div class="error" id="pinError"></div>
@@ -212,8 +214,12 @@
       setTimeout(() => {
         document.getElementById('loadingScreen').style.display = 'none';
         document.getElementById('pinScreen').style.display = 'flex';
-      }, 3000); // durasi loading
+      }, 3000);
     });
+
+    function limitInputLength(input) {
+      input.value = input.value.replace(/[^0-9]/g, '').slice(0, 8);
+    }
 
     function checkPin() {
       const pin = document.getElementById('pinInput').value;
