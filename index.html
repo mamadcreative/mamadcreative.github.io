@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Ucapan Selamat Datang</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Selamat Datang di GitHub Saya</title>
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -17,14 +17,16 @@
       margin: 0;
       text-align: center;
     }
+
     h1 {
       font-size: 3rem;
-      margin-bottom: 0.5em;
     }
+
     p {
-      font-size: 1.5rem;
+      font-size: 1.2rem;
       max-width: 600px;
     }
+
     .button {
       margin-top: 2em;
       padding: 10px 20px;
@@ -36,22 +38,81 @@
       cursor: pointer;
       transition: background-color 0.3s ease;
     }
+
     .button:hover {
       background-color: #e0e0e0;
+    }
+
+    /* Modal styles */
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
+    }
+
+    .modal-content {
+      background: #fff;
+      padding: 2em;
+      border-radius: 12px;
+      text-align: center;
+      color: #1f4037;
+      max-width: 400px;
+    }
+
+    .modal-content h2 {
+      margin-bottom: 1em;
+    }
+
+    .modal-content button {
+      padding: 10px 20px;
+      font-size: 1rem;
+      background-color: #1f4037;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .modal-content button:hover {
+      background-color: #16332b;
     }
   </style>
 </head>
 <body>
-  <h1>👋 Halo, Selamat Datang!</h1>
-  <p>Terima kasih telah mengunjungi repositori GitHub saya. Di sini kamu akan menemukan berbagai proyek, eksperimen, dan ide menarik. Jangan ragu untuk menjelajahi dan memberikan masukan!</p>
+  <h1>🎉 Selamat Datang!</h1>
+  <p>Terima kasih telah mampir ke halaman GitHub saya. Santai dulu sambil dengerin musik 🎶</p>
   <a href="https://github.com/mamadcreative" target="_blank">
-    <button class="button">Kunjungi Profil Saya</button>
+    <button class="button">Lihat Profil Saya</button>
   </a>
 
-  <!-- Musik latar -->
-  <audio autoplay loop>
-    <source src="music.mp3" type="audio/mpeg">
+  <!-- Modal pop-up -->
+  <div class="modal" id="musicModal">
+    <div class="modal-content">
+      <h2>Putar Musik Latar?</h2>
+      <p>Klik tombol di bawah ini untuk mulai musik 🎧</p>
+      <button onclick="startMusic()">Play Musik</button>
+    </div>
+  </div>
+
+  <!-- Audio player -->
+  <audio id="bgMusic" loop>
+    <source src="music.mp3" type="audio/mpeg" />
     Browser kamu tidak mendukung audio 😢
   </audio>
+
+  <script>
+    function startMusic() {
+      const music = document.getElementById('bgMusic');
+      music.play();
+      document.getElementById('musicModal').style.display = 'none';
+    }
+  </script>
 </body>
 </html>
