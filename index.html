@@ -3,12 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Selamat Datang</title>
+  <title>Kado Ulang Tahun 🎁</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
+    * { box-sizing: border-box; }
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(to right, #1f4037, #99f2c8);
-      color: #fff;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to right, #1a1a2e, #16213e);
+      color: #f8f8f8;
       margin: 0;
       height: 100vh;
       overflow: hidden;
@@ -16,7 +18,7 @@
 
     #loadingScreen {
       position: fixed;
-      background-color: #1f4037;
+      background-color: #0f0f1f;
       width: 100%;
       height: 100%;
       z-index: 1000;
@@ -24,11 +26,13 @@
       align-items: center;
       justify-content: center;
       flex-direction: column;
+      color: #ff9aff;
+      text-shadow: 0 0 10px #ff9aff;
     }
 
     .loader {
       border: 8px solid #f3f3f3;
-      border-top: 8px solid #99f2c8;
+      border-top: 8px solid #ff9aff;
       border-radius: 50%;
       width: 60px;
       height: 60px;
@@ -41,10 +45,10 @@
       100% { transform: rotate(360deg); }
     }
 
-    #pinScreen {
-      display: none;
+    #pinScreen, .modal {
       position: fixed;
-      background: rgba(0, 0, 0, 0.8);
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(10px);
       width: 100%;
       height: 100%;
       z-index: 999;
@@ -53,38 +57,43 @@
       justify-content: center;
     }
 
-    .pin-box {
-      background: white;
-      color: #1f4037;
+    .pin-box, .modal-content {
+      background: rgba(30, 30, 60, 0.9);
+      color: #fce4ec;
       padding: 2em;
-      border-radius: 12px;
+      border-radius: 16px;
       text-align: center;
+      box-shadow: 0 0 20px #ff9aff;
     }
 
-    .pin-box input {
-      padding: 10px;
+    input {
+      padding: 12px;
       font-size: 1.2rem;
       margin-bottom: 1em;
       width: 100%;
       border-radius: 8px;
-      border: 1px solid #ccc;
+      border: none;
+      background-color: #fff;
+      color: #333;
     }
 
-    .pin-box button {
+    button {
       padding: 10px 20px;
-      background-color: #1f4037;
-      color: white;
+      background-color: #ff9aff;
+      color: #1a1a2e;
+      font-weight: bold;
       border: none;
       border-radius: 8px;
       cursor: pointer;
+      transition: background-color 0.3s ease;
     }
 
-    .pin-box button:hover {
-      background-color: #16332b;
+    button:hover {
+      background-color: #e088e0;
     }
 
     .error {
-      color: red;
+      color: #ff4d6d;
       font-size: 0.9rem;
       margin-top: 0.5em;
     }
@@ -92,72 +101,44 @@
     #mainContent {
       display: none;
       height: 100%;
-      display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       text-align: center;
+      animation: fadeIn 1s ease-in-out;
+      padding: 1em;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     h1 {
       font-size: 3rem;
+      color: #ff9aff;
+      text-shadow: 0 0 10px #ff9aff;
     }
 
     p {
       font-size: 1.2rem;
       max-width: 600px;
+      color: #ffe6f7;
+      margin-bottom: 2em;
     }
 
     .button {
-      margin-top: 2em;
       padding: 10px 20px;
       font-size: 1rem;
-      color: #1f4037;
       background-color: #fff;
+      color: #1f1f3f;
       border: none;
       border-radius: 8px;
       cursor: pointer;
-      transition: background-color 0.3s ease;
     }
 
     .button:hover {
       background-color: #e0e0e0;
-    }
-
-    .modal {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(0, 0, 0, 0.7);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 998;
-    }
-
-    .modal-content {
-      background: #fff;
-      padding: 2em;
-      border-radius: 12px;
-      text-align: center;
-      color: #1f4037;
-      max-width: 400px;
-    }
-
-    .modal-content button {
-      padding: 10px 20px;
-      font-size: 1rem;
-      background-color: #1f4037;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-
-    .modal-content button:hover {
-      background-color: #16332b;
     }
   </style>
 </head>
@@ -166,41 +147,46 @@
   <!-- Loading screen -->
   <div id="loadingScreen">
     <div class="loader"></div>
-    <p>Memuat halaman...</p>
+    <p>Membuka kado spesial...</p>
   </div>
 
   <!-- PIN input -->
-  <div id="pinScreen">
+  <div id="pinScreen" style="display:none">
     <div class="pin-box">
-      <h2>Masukkan PIN untuk lanjut</h2>
+      <h2>Masukkan Kode Rahasia 🎁</h2>
+      <p>Untuk membuka kado ulang tahun 🎂</p>
       <input 
         type="password" 
         id="pinInput" 
         placeholder="Masukkan PIN" 
         maxlength="8" 
-        oninput="limitInputLength(this)"
+        oninput="limitInputLength(this)" 
       />
       <br />
-      <button onclick="checkPin()">Submit</button>
+      <button onclick="checkPin()">Buka</button>
       <div class="error" id="pinError"></div>
     </div>
   </div>
 
   <!-- Modal musik -->
-  <div class="modal" id="musicModal">
+  <div class="modal" id="musicModal" style="display:none">
     <div class="modal-content">
-      <h2>Putar Musik Latar?</h2>
-      <p>Klik tombol di bawah ini untuk mulai musik 🎧</p>
+      <h2>🎶 Musik Latar</h2>
+      <p>Klik untuk memainkan musik spesial 🎵</p>
       <button onclick="startMusic()">Play Musik</button>
     </div>
   </div>
 
   <!-- Konten utama -->
   <div id="mainContent">
-    <h1>🎉 Selamat Datang!</h1>
-    <p>Terima kasih telah mampir ke halaman GitHub saya. Santai dulu sambil dengerin musik 🎶</p>
+    <h1>🎉 Selamat Ulang Tahun!</h1>
+    <p>
+      Hari ini adalah hari istimewa untuk orang yang luar biasa. Semoga harimu dipenuhi dengan kebahagiaan, tawa, dan cinta. <br /><br />
+      Jangan lupa bahwa kamu sangat berharga dan dicintai. Terima kasih telah menjadi kamu. ❤️<br /><br />
+      Nikmati hadiah kecil ini 🎁
+    </p>
     <a href="https://github.com/mamadcreative" target="_blank">
-      <button class="button">Lihat Profil Saya</button>
+      <button class="button">Hadiah Rahasia</button>
     </a>
   </div>
 
@@ -229,7 +215,7 @@
         document.getElementById('musicModal').style.display = 'flex';
         error.textContent = '';
       } else {
-        error.textContent = 'PIN salah! Coba lagi.';
+        error.textContent = 'Ups! Kode salah 💔';
       }
     }
 
