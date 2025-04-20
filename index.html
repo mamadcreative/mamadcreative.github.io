@@ -190,20 +190,28 @@
     </a>
   </div>
 
-  <!-- Musik -->
+  <!-- Musik latar -->
   <audio id="bgMusic" loop>
     <source src="music.mp3" type="audio/mpeg" />
+  </audio>
+
+  <!-- Suara ketikan -->
+  <audio id="typeSound">
+    <source src="type.mp3" type="audio/mpeg" />
   </audio>
 
   <script>
     const loadingTextElement = document.getElementById("loadingText");
     const loadingBaseText = "SAKEDAP...";
+    const typeSound = document.getElementById("typeSound");
     let repeat = 0;
     let i = 0;
 
     function typeWriterRepeat() {
       if (i < loadingBaseText.length) {
         loadingTextElement.innerHTML += loadingBaseText.charAt(i);
+        typeSound.currentTime = 0;
+        typeSound.play();
         i++;
         setTimeout(typeWriterRepeat, 150);
       } else {
@@ -223,7 +231,7 @@
       setTimeout(() => {
         document.getElementById('loadingScreen').style.display = 'none';
         document.getElementById('pinScreen').style.display = 'flex';
-      }, 4500); // cukup waktu untuk 3x typewriter
+      }, 4500); // waktu cukup untuk 3x SAKEDAP...
     });
 
     function limitInputLength(input) {
