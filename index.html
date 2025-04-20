@@ -16,6 +16,7 @@
       overflow: hidden;
     }
 
+    /* Loading screen */
     #loadingScreen {
       position: fixed;
       background-color: #0f0f1f;
@@ -45,6 +46,7 @@
       100% { transform: rotate(360deg); }
     }
 
+    /* PIN & Modal */
     #pinScreen, .modal {
       position: fixed;
       background: rgba(0, 0, 0, 0.6);
@@ -72,16 +74,19 @@
       gap: 10px;
     }
 
-    input {
+    input, textarea, select {
       padding: 12px;
-      font-size: 1.5rem;
+      font-size: 1.2rem;
+      border-radius: 8px;
+      border: none;
+      margin-top: 5px;
+      width: 100%;
+    }
+
+    input[type="text"] {
       text-align: center;
       width: 50px;
       height: 50px;
-      border-radius: 8px;
-      border: none;
-      background-color: #fff;
-      color: #333;
     }
 
     button {
@@ -151,13 +156,13 @@
 </head>
 <body>
 
-  <!-- Loading screen -->
+  <!-- Loading -->
   <div id="loadingScreen">
     <div class="loader"></div>
     <p id="loadingText"></p>
   </div>
 
-  <!-- PIN input -->
+  <!-- PIN -->
   <div id="pinScreen" style="display:none">
     <div class="pin-box">
       <h2>Masukkan Kode Rahasia 🎁</h2>
@@ -189,8 +194,8 @@
   <div id="mainContent">
     <h1>🎉 Selamat Ulang Tahun!</h1>
     <p>
-      Hari ini adalah hari istimewa untuk orang yang luar biasa. Semoga harimu dipenuhi dengan kebahagiaan, tawa, dan cinta. <br /><br />
-      Jangan lupa bahwa kamu sangat berharga dan dicintai. Terima kasih telah menjadi kamu. ❤️<br /><br />
+      Hari ini adalah hari istimewa untuk orang yang luar biasa. Semoga harimu dipenuhi dengan kebahagiaan, tawa, dan cinta. <br><br>
+      Jangan lupa bahwa kamu sangat berharga dan dicintai. Terima kasih telah menjadi kamu. ❤️<br><br>
       Nikmati hadiah kecil ini 🎁
     </p>
     <a href="https://github.com/mamadcreative" target="_blank">
@@ -198,46 +203,45 @@
     </a>
   </div>
 
-  <!-- Tambahkan di bawah konten utama -->
-<div id="questionnaire" style="display:none; margin-top:30px;">
-  <h2>🎉 Isi kuisioner singkat ya!</h2>
-  <form id="formQ">
-    <label>Nama kamu:<br>
-      <input type="text" name="nama" required />
-    </label><br><br>
-    <label>Ucapan ulang tahun:<br>
-      <textarea name="ucapan" required></textarea>
-    </label><br><br>
-    <label>Seberapa suka dengan hadiah ini?<br>
-      <select name="rating" required>
-        <option value="">-- Pilih --</option>
-        <option value="5">🌟🌟🌟🌟🌟 (Suka banget!)</option>
-        <option value="4">🌟🌟🌟🌟</option>
-        <option value="3">🌟🌟🌟</option>
-        <option value="2">🌟🌟</option>
-        <option value="1">🌟</option>
-      </select>
-    </label><br><br>
-    <button type="submit">Kirim Jawaban</button>
-  </form>
-</div>
+  <!-- Kuisioner -->
+  <div id="questionnaire" style="display:none; margin-top:30px;">
+    <h2>🎉 Isi kuisioner singkat ya!</h2>
+    <form id="formQ">
+      <label>Nama kamu:<br>
+        <input type="text" name="nama" required />
+      </label><br><br>
+      <label>Ucapan ulang tahun:<br>
+        <textarea name="ucapan" required></textarea>
+      </label><br><br>
+      <label>Seberapa suka dengan hadiah ini?<br>
+        <select name="rating" required>
+          <option value="">-- Pilih --</option>
+          <option value="5">🌟🌟🌟🌟🌟 (Suka banget!)</option>
+          <option value="4">🌟🌟🌟🌟</option>
+          <option value="3">🌟🌟🌟</option>
+          <option value="2">🌟🌟</option>
+          <option value="1">🌟</option>
+        </select>
+      </label><br><br>
+      <button type="submit">Kirim Jawaban</button>
+    </form>
+  </div>
 
-
-  <!-- Musik latar -->
+  <!-- Musik dan ketikan -->
   <audio id="bgMusic" loop>
     <source src="music.mp3" type="audio/mpeg" />
   </audio>
 
-  <!-- Suara ketikan hanya untuk input PIN -->
   <audio id="typeSound">
     <source src="type.mp3" type="audio/mpeg" />
   </audio>
 
+  <!-- Script -->
   <script>
+    // Loading animation
     const loadingTextElement = document.getElementById("loadingText");
     const loadingBaseText = "SAKEDAP...";
-    let repeat = 0;
-    let i = 0;
+    let repeat = 0, i = 0;
 
     function typeWriterRepeat() {
       if (i < loadingBaseText.length) {
@@ -269,30 +273,18 @@
       if (currentInput.value.length === currentInput.maxLength && nextId) {
         document.getElementById(nextId).focus();
       }
-
-      // Hanya mainkan suara saat ketik PIN
-      const typeSound = document.getElementById("typeSound");
-      typeSound.currentTime = 0;
-      typeSound.play();
+      document.getElementById("typeSound").play();
     }
 
     function moveFocusOnBackspace(event, currentId, previousId) {
       const currentInput = document.getElementById(currentId);
-      if (event.key === 'Backspace' && currentInput.value === '') {
-        if (previousId) {
-          document.getElementById(previousId).focus();
-        }
+      if (event.key === 'Backspace' && currentInput.value === '' && previousId) {
+        document.getElementById(previousId).focus();
       }
     }
 
     function checkPin() {
-      const pin = document.getElementById('pin1').value +
-                  document.getElementById('pin2').value +
-                  document.getElementById('pin3').value +
-                  document.getElementById('pin4').value +
-                  document.getElementById('pin5').value +
-                  document.getElementById('pin6').value;
-
+      const pin = [...Array(6).keys()].map(i => document.getElementById('pin' + (i+1)).value).join('');
       const error = document.getElementById('pinError');
       if (pin === '180404') {
         document.getElementById('pinScreen').style.display = 'none';
@@ -303,52 +295,40 @@
       }
     }
 
+    function showQuestionnaire() {
+      document.getElementById('questionnaire').style.display = 'block';
+    }
+
     function startMusic() {
-      const music = document.getElementById('bgMusic');
-      music.play();
+      document.getElementById('bgMusic').play();
       document.getElementById('musicModal').style.display = 'none';
       document.getElementById('mainContent').style.display = 'flex';
+      showQuestionnaire();
     }
-  </script>
-  <script>
-  function showQuestionnaire() {
-    document.getElementById('questionnaire').style.display = 'block';
-  }
 
-  document.getElementById("formQ").addEventListener("submit", function(e) {
-    e.preventDefault();
-    const form = e.target;
-    const data = {
-      nama: form.nama.value,
-      ucapan: form.ucapan.value,
-      rating: form.rating.value
-    };
+    document.getElementById("formQ").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const form = e.target;
+      const data = {
+        nama: form.nama.value,
+        ucapan: form.ucapan.value,
+        rating: form.rating.value
+      };
 
-    fetch("https://script.google.com/macros/s/AKfycbwSneX8Z_MLc6WKRVtlHx6AL7TQRH3XEDQj1UzjWVJ2-9e7CjyWFG-piqoZJ2t7z-6Fcw/exec", {
-      method: 'POST',
-      body: JSON.stringify(data),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-    .then(res => {
-      alert("🎉 Terima kasih! Jawabanmu sudah terkirim!");
-      form.reset();
-    })
-    .catch(err => {
-      alert("Ups! Gagal mengirim. Coba lagi ya.");
-      console.error(err);
+      fetch("https://script.google.com/macros/s/AKfycbwSneX8Z_MLc6WKRVtlHx6AL7TQRH3XEDQj1UzjWVJ2-9e7CjyWFG-piqoZJ2t7z-6Fcw/exec", {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: { 'Content-Type': 'application/json' },
+      })
+      .then(res => {
+        alert("🎉 Terima kasih! Jawabanmu sudah terkirim!");
+        form.reset();
+      })
+      .catch(err => {
+        alert("Ups! Gagal mengirim. Coba lagi ya.");
+        console.error(err);
+      });
     });
-  });
-
-  function startMusic() {
-    const music = document.getElementById('bgMusic');
-    music.play();
-    document.getElementById('musicModal').style.display = 'none';
-    document.getElementById('mainContent').style.display = 'flex';
-    showQuestionnaire(); // tampilkan form setelah musik diputar
-  }
-</script>
-
+  </script>
 </body>
 </html>
