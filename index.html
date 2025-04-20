@@ -195,7 +195,7 @@
     <source src="music.mp3" type="audio/mpeg" />
   </audio>
 
-  <!-- Suara ketikan -->
+  <!-- Suara ketikan hanya untuk input PIN -->
   <audio id="typeSound">
     <source src="type.mp3" type="audio/mpeg" />
   </audio>
@@ -203,15 +203,12 @@
   <script>
     const loadingTextElement = document.getElementById("loadingText");
     const loadingBaseText = "SAKEDAP...";
-    const typeSound = document.getElementById("typeSound");
     let repeat = 0;
     let i = 0;
 
     function typeWriterRepeat() {
       if (i < loadingBaseText.length) {
         loadingTextElement.innerHTML += loadingBaseText.charAt(i);
-        typeSound.currentTime = 0;
-        typeSound.play();
         i++;
         setTimeout(typeWriterRepeat, 150);
       } else {
@@ -231,11 +228,16 @@
       setTimeout(() => {
         document.getElementById('loadingScreen').style.display = 'none';
         document.getElementById('pinScreen').style.display = 'flex';
-      }, 4500); // waktu cukup untuk 3x SAKEDAP...
+      }, 4500);
     });
 
     function limitInputLength(input) {
       input.value = input.value.replace(/[^0-9]/g, '').slice(0, 8);
+
+      // Hanya mainkan suara saat ketik PIN
+      const typeSound = document.getElementById("typeSound");
+      typeSound.currentTime = 0;
+      typeSound.play();
     }
 
     function checkPin() {
