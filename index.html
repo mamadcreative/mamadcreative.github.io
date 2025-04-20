@@ -198,6 +198,31 @@
     </a>
   </div>
 
+  <!-- Tambahkan di bawah konten utama -->
+<div id="questionnaire" style="display:none; margin-top:30px;">
+  <h2>🎉 Isi kuisioner singkat ya!</h2>
+  <form id="formQ">
+    <label>Nama kamu:<br>
+      <input type="text" name="nama" required />
+    </label><br><br>
+    <label>Ucapan ulang tahun:<br>
+      <textarea name="ucapan" required></textarea>
+    </label><br><br>
+    <label>Seberapa suka dengan hadiah ini?<br>
+      <select name="rating" required>
+        <option value="">-- Pilih --</option>
+        <option value="5">🌟🌟🌟🌟🌟 (Suka banget!)</option>
+        <option value="4">🌟🌟🌟🌟</option>
+        <option value="3">🌟🌟🌟</option>
+        <option value="2">🌟🌟</option>
+        <option value="1">🌟</option>
+      </select>
+    </label><br><br>
+    <button type="submit">Kirim Jawaban</button>
+  </form>
+</div>
+
+
   <!-- Musik latar -->
   <audio id="bgMusic" loop>
     <source src="music.mp3" type="audio/mpeg" />
@@ -285,5 +310,45 @@
       document.getElementById('mainContent').style.display = 'flex';
     }
   </script>
+  <script>
+  function showQuestionnaire() {
+    document.getElementById('questionnaire').style.display = 'block';
+  }
+
+  document.getElementById("formQ").addEventListener("submit", function(e) {
+    e.preventDefault();
+    const form = e.target;
+    const data = {
+      nama: form.nama.value,
+      ucapan: form.ucapan.value,
+      rating: form.rating.value
+    };
+
+    fetch("https://script.google.com/macros/s/AKfycbwSneX8Z_MLc6WKRVtlHx6AL7TQRH3XEDQj1UzjWVJ2-9e7CjyWFG-piqoZJ2t7z-6Fcw/exec", {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    .then(res => {
+      alert("🎉 Terima kasih! Jawabanmu sudah terkirim!");
+      form.reset();
+    })
+    .catch(err => {
+      alert("Ups! Gagal mengirim. Coba lagi ya.");
+      console.error(err);
+    });
+  });
+
+  function startMusic() {
+    const music = document.getElementById('bgMusic');
+    music.play();
+    document.getElementById('musicModal').style.display = 'none';
+    document.getElementById('mainContent').style.display = 'flex';
+    showQuestionnaire(); // tampilkan form setelah musik diputar
+  }
+</script>
+
 </body>
 </html>
