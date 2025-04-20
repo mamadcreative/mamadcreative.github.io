@@ -163,12 +163,12 @@
       <h2>Masukkan Kode Rahasia 🎁</h2>
       <p>Untuk membuka kado ulang tahun 🎂</p>
       <div class="pin-input-container">
-        <input type="text" id="pin1" maxlength="1" oninput="moveFocus('pin1', 'pin2')" />
-        <input type="text" id="pin2" maxlength="1" oninput="moveFocus('pin2', 'pin3')" />
-        <input type="text" id="pin3" maxlength="1" oninput="moveFocus('pin3', 'pin4')" />
-        <input type="text" id="pin4" maxlength="1" oninput="moveFocus('pin4', 'pin5')" />
-        <input type="text" id="pin5" maxlength="1" oninput="moveFocus('pin5', 'pin6')" />
-        <input type="text" id="pin6" maxlength="1" oninput="moveFocus('pin6', null)" />
+        <input type="text" id="pin1" maxlength="1" oninput="moveFocus('pin1', 'pin2')" onkeydown="moveFocusOnBackspace(event, 'pin1', 'pin2')" />
+        <input type="text" id="pin2" maxlength="1" oninput="moveFocus('pin2', 'pin3')" onkeydown="moveFocusOnBackspace(event, 'pin2', 'pin1')" />
+        <input type="text" id="pin3" maxlength="1" oninput="moveFocus('pin3', 'pin4')" onkeydown="moveFocusOnBackspace(event, 'pin3', 'pin2')" />
+        <input type="text" id="pin4" maxlength="1" oninput="moveFocus('pin4', 'pin5')" onkeydown="moveFocusOnBackspace(event, 'pin4', 'pin3')" />
+        <input type="text" id="pin5" maxlength="1" oninput="moveFocus('pin5', 'pin6')" onkeydown="moveFocusOnBackspace(event, 'pin5', 'pin4')" />
+        <input type="text" id="pin6" maxlength="1" oninput="moveFocus('pin6', null)" onkeydown="moveFocusOnBackspace(event, 'pin6', 'pin5')" />
       </div>
       <br />
       <button onclick="checkPin()">Buka</button>
@@ -249,6 +249,15 @@
       const typeSound = document.getElementById("typeSound");
       typeSound.currentTime = 0;
       typeSound.play();
+    }
+
+    function moveFocusOnBackspace(event, currentId, previousId) {
+      const currentInput = document.getElementById(currentId);
+      if (event.key === 'Backspace' && currentInput.value === '') {
+        if (previousId) {
+          document.getElementById(previousId).focus();
+        }
+      }
     }
 
     function checkPin() {
