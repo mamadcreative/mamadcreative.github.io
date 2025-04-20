@@ -196,23 +196,34 @@
   </audio>
 
   <script>
-    const loadingText = "SAKEDAP...";
+    const loadingTextElement = document.getElementById("loadingText");
+    const loadingBaseText = "SAKEDAP...";
+    let repeat = 0;
     let i = 0;
 
-    function typeWriter() {
-      if (i < loadingText.length) {
-        document.getElementById("loadingText").innerHTML += loadingText.charAt(i);
+    function typeWriterRepeat() {
+      if (i < loadingBaseText.length) {
+        loadingTextElement.innerHTML += loadingBaseText.charAt(i);
         i++;
-        setTimeout(typeWriter, 150);
+        setTimeout(typeWriterRepeat, 150);
+      } else {
+        repeat++;
+        if (repeat < 3) {
+          setTimeout(() => {
+            loadingTextElement.innerHTML = "";
+            i = 0;
+            typeWriterRepeat();
+          }, 400);
+        }
       }
     }
 
     window.addEventListener('load', () => {
-      typeWriter();
+      typeWriterRepeat();
       setTimeout(() => {
         document.getElementById('loadingScreen').style.display = 'none';
         document.getElementById('pinScreen').style.display = 'flex';
-      }, 3000);
+      }, 4500); // cukup waktu untuk 3x typewriter
     });
 
     function limitInputLength(input) {
