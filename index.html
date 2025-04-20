@@ -147,7 +147,7 @@
   <!-- Loading screen -->
   <div id="loadingScreen">
     <div class="loader"></div>
-    <p>Membuka kado spesial...</p>
+    <p id="loadingText"></p>
   </div>
 
   <!-- PIN input -->
@@ -196,7 +196,19 @@
   </audio>
 
   <script>
+    const loadingText = "SAKEDAP...";
+    let i = 0;
+
+    function typeWriter() {
+      if (i < loadingText.length) {
+        document.getElementById("loadingText").innerHTML += loadingText.charAt(i);
+        i++;
+        setTimeout(typeWriter, 150);
+      }
+    }
+
     window.addEventListener('load', () => {
+      typeWriter();
       setTimeout(() => {
         document.getElementById('loadingScreen').style.display = 'none';
         document.getElementById('pinScreen').style.display = 'flex';
