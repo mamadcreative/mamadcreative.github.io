@@ -2,190 +2,29 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Kado Ulang Tahun 🎁</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-  <style>
-    * { box-sizing: border-box; }
-    body {
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(to right, #1a1a2e, #16213e);
-      color: #f8f8f8;
-      margin: 0;
-      height: 100vh;
-      overflow: hidden;
-    }
-
-    #loadingScreen {
-      position: fixed;
-      background-color: #0f0f1f;
-      width: 100%;
-      height: 100%;
-      z-index: 1000;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      color: #ff9aff;
-      text-shadow: 0 0 10px #ff9aff;
-    }
-
-    .loader {
-      border: 8px solid #f3f3f3;
-      border-top: 8px solid #ff9aff;
-      border-radius: 50%;
-      width: 60px;
-      height: 60px;
-      animation: spin 1s linear infinite;
-      margin-bottom: 1em;
-    }
-
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-
-    #pinScreen, .modal {
-      position: fixed;
-      background: rgba(0, 0, 0, 0.6);
-      backdrop-filter: blur(10px);
-      width: 100%;
-      height: 100%;
-      z-index: 999;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .pin-box, .modal-content {
-      background: rgba(30, 30, 60, 0.9);
-      color: #fce4ec;
-      padding: 2em;
-      border-radius: 16px;
-      text-align: center;
-      box-shadow: 0 0 20px #ff9aff;
-    }
-
-    .pin-input-container {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-    }
-
-    input {
-      padding: 12px;
-      font-size: 1.5rem;
-      text-align: center;
-      width: 50px;
-      height: 50px;
-      border-radius: 8px;
-      border: none;
-      background-color: #fff;
-      color: #333;
-    }
-
-    button {
-      padding: 10px 20px;
-      background-color: #ff9aff;
-      color: #1a1a2e;
-      font-weight: bold;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-
-    button:hover {
-      background-color: #e088e0;
-    }
-
-    .error {
-      color: #ff4d6d;
-      font-size: 0.9rem;
-      margin-top: 0.5em;
-    }
-
-    #mainContent {
-      display: none;
-      height: 100%;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      animation: fadeIn 1s ease-in-out;
-      padding: 1em;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    h1 {
-      font-size: 3rem;
-      color: #ff9aff;
-      text-shadow: 0 0 10px #ff9aff;
-    }
-
-    p {
-      font-size: 1.2rem;
-      max-width: 600px;
-      color: #ffe6f7;
-      margin-bottom: 2em;
-    }
-
-    .button {
-      padding: 10px 20px;
-      font-size: 1rem;
-      background-color: #fff;
-      color: #1f1f3f;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-
-    .button:hover {
-      background-color: #e0e0e0;
-    }
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hadiah Ulang Tahun 🎉</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-
-  <!-- Loading screen -->
-  <div id="loadingScreen">
-    <div class="loader"></div>
-    <p id="loadingText"></p>
+  <!-- PIN Verification -->
+  <div class="pin-section">
+    <input type="text" id="pin6" maxlength="1" oninput="moveFocus('pin6', null)" onkeydown="moveFocusOnBackspace(event, 'pin6', 'pin5')" />
+    <br />
+    <button onclick="checkPin()">Buka</button>
+    <div class="error" id="pinError"></div>
   </div>
 
-  <!-- PIN input -->
-  <div id="pinScreen" style="display:none">
-    <div class="pin-box">
-      <h2>Masukkan Kode Rahasia 🎁</h2>
-      <p>Untuk membuka kado ulang tahun 🎂</p>
-      <div class="pin-input-container">
-        <input type="text" id="pin1" maxlength="1" oninput="moveFocus('pin1', 'pin2')" onkeydown="moveFocusOnBackspace(event, 'pin1', 'pin2')" />
-        <input type="text" id="pin2" maxlength="1" oninput="moveFocus('pin2', 'pin3')" onkeydown="moveFocusOnBackspace(event, 'pin2', 'pin1')" />
-        <input type="text" id="pin3" maxlength="1" oninput="moveFocus('pin3', 'pin4')" onkeydown="moveFocusOnBackspace(event, 'pin3', 'pin2')" />
-        <input type="text" id="pin4" maxlength="1" oninput="moveFocus('pin4', 'pin5')" onkeydown="moveFocusOnBackspace(event, 'pin4', 'pin3')" />
-        <input type="text" id="pin5" maxlength="1" oninput="moveFocus('pin5', 'pin6')" onkeydown="moveFocusOnBackspace(event, 'pin5', 'pin4')" />
-        <input type="text" id="pin6" maxlength="1" oninput="moveFocus('pin6', null)" onkeydown="moveFocusOnBackspace(event, 'pin6', 'pin5')" />
-      </div>
-      <br />
-      <button onclick="checkPin()">Buka</button>
-      <div class="error" id="pinError"></div>
-    </div>
-  </div>
-
-  <!-- Modal musik -->
+  <!-- Modal Musik -->
   <div class="modal" id="musicModal" style="display:none">
     <div class="modal-content">
-      <h2>🎶 Musik Latar</h2>
-      <p>Klik untuk memainkan musik spesial 🎵</p>
+      <h2>🎵 Musik Latar</h2>
+      <p>Klik untuk memainkan musik spesial 🎶</p>
       <button onclick="startMusic()">Play Musik</button>
     </div>
   </div>
 
-  <!-- Konten utama -->
+  <!-- Konten Utama -->
   <div id="mainContent">
     <h1>🎉 Selamat Ulang Tahun!</h1>
     <p>
@@ -193,152 +32,8 @@
       Jangan lupa bahwa kamu sangat berharga dan dicintai. Terima kasih telah menjadi kamu. ❤️<br /><br />
       Nikmati hadiah kecil ini 🎁
     </p>
-    <a href="https://github.com/mamadcreative" target="_blank">
-      <button class="button">Hadiah Rahasia</button>
-    </a>
   </div>
 
-  <!-- Kuisioner -->
-  <div id="questionnaire" style="display:none; margin-top:30px;">
-    <h2>🎉 Isi kuisioner singkat ya!</h2>
-    <form id="formQ">
-      <label>Nama kamu:<br>
-        <input type="text" name="nama" required />
-      </label><br><br>
-      <label>Ucapan ulang tahun:<br>
-        <textarea name="ucapan" required></textarea>
-      </label><br><br>
-      <label>Seberapa suka dengan hadiah ini?<br>
-        <select name="rating" required>
-          <option value="">-- Pilih --</option>
-          <option value="5">🌟🌟🌟🌟🌟 (Suka banget!)</option>
-          <option value="4">🌟🌟🌟🌟</option>
-          <option value="3">🌟🌟🌟</option>
-          <option value="2">🌟🌟</option>
-          <option value="1">🌟</option>
-        </select>
-      </label><br><br>
-      <button type="submit">Kirim Jawaban</button>
-    </form>
-  </div>
-
-  <!-- Musik latar -->
-  <audio id="bgMusic" loop>
-    <source src="music.mp3" type="audio/mpeg" />
-  </audio>
-
-  <!-- Suara ketikan hanya untuk input PIN -->
-  <audio id="typeSound">
-    <source src="type.mp3" type="audio/mpeg" />
-  </audio>
-
-  <script>
-    const loadingTextElement = document.getElementById("loadingText");
-    const loadingBaseText = "SAKEDAP...";
-    let repeat = 0;
-    let i = 0;
-
-    function typeWriterRepeat() {
-      if (i < loadingBaseText.length) {
-        loadingTextElement.innerHTML += loadingBaseText.charAt(i);
-        i++;
-        setTimeout(typeWriterRepeat, 150);
-      } else {
-        repeat++;
-        if (repeat < 3) {
-          setTimeout(() => {
-            loadingTextElement.innerHTML = "";
-            i = 0;
-            typeWriterRepeat();
-          }, 400);
-        }
-      }
-    }
-
-    window.addEventListener('load', () => {
-      typeWriterRepeat();
-      setTimeout(() => {
-        document.getElementById('loadingScreen').style.display = 'none';
-        document.getElementById('pinScreen').style.display = 'flex';
-      }, 4500);
-    });
-
-    function moveFocus(currentId, nextId) {
-      const currentInput = document.getElementById(currentId);
-      if (currentInput.value.length === currentInput.maxLength && nextId) {
-        document.getElementById(nextId).focus();
-      }
-
-      const typeSound = document.getElementById("typeSound");
-      typeSound.currentTime = 0;
-      typeSound.play();
-    }
-
-    function moveFocusOnBackspace(event, currentId, previousId) {
-      const currentInput = document.getElementById(currentId);
-      if (event.key === 'Backspace' && currentInput.value === '') {
-        if (previousId) {
-          document.getElementById(previousId).focus();
-        }
-      }
-    }
-
-    function checkPin() {
-      const pin = document.getElementById('pin1').value +
-                  document.getElementById('pin2').value +
-                  document.getElementById('pin3').value +
-                  document.getElementById('pin4').value +
-                  document.getElementById('pin5').value +
-                  document.getElementById('pin6').value;
-
-      const error = document.getElementById('pinError');
-      if (pin === '180404') {
-        document.getElementById('pinScreen').style.display = 'none';
-        document.getElementById('musicModal').style.display = 'flex';
-        error.textContent = '';
-      } else {
-        error.textContent = 'Ups! Kode salah 💔';
-      }
-    }
-
-    function showQuestionnaire() {
-      document.getElementById('questionnaire').style.display = 'block';
-    }
-
-    function startMusic() {
-      const music = document.getElementById('bgMusic');
-      music.play();
-      document.getElementById('musicModal').style.display = 'none';
-      document.getElementById('mainContent').style.display = 'flex';
-      setTimeout(showQuestionnaire, 1500); // Munculkan kuisioner setelah 1.5 detik
-    }
-
-    document.getElementById("formQ").addEventListener("submit", function(e) {
-      e.preventDefault();
-      const form = e.target;
-      const data = {
-        nama: form.nama.value,
-        ucapan: form.ucapan.value,
-        rating: form.rating.value
-      };
-
-      fetch("https://script.google.com/macros/s/AKfycbwSneX8Z_MLc6WKRVtlHx6AL7TQRH3XEDQj1UzjWVJ2-9e7CjyWFG-piqoZJ2t7z-6Fcw/exec", {
-        method: 'POST',
-        body: JSON.stringify(data),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-      .then(res => {
-        alert("🎉 Terima kasih! Jawabanmu sudah terkirim!");
-        form.reset();
-      })
-      .catch(err => {
-        alert("Ups! Gagal mengirim. Coba lagi ya.");
-        console.error(err);
-      });
-    });
-  </script>
-
+  <script src="script.js"></script>
 </body>
 </html>
