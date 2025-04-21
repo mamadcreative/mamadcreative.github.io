@@ -1,8 +1,13 @@
 body {
   font-family: Arial, sans-serif;
-  text-align: center;
-  background-color: #fff8f0;
+  background: #fff7f0;
+  color: #333;
   padding: 20px;
+  text-align: center;
+}
+
+h1 {
+  color: #ff4081;
 }
 
 .modal {
@@ -19,27 +24,16 @@ body {
 
 .modal-content {
   background: white;
-  padding: 30px;
-  border-radius: 12px;
-  text-align: center;
-  width: 300px;
+  padding: 20px;
+  border-radius: 10px;
 }
 
 button {
   padding: 10px 20px;
-  margin-top: 10px;
+  font-size: 16px;
+  background-color: #ff4081;
   border: none;
-  background-color: #f28ab2;
   color: white;
-  border-radius: 6px;
+  border-radius: 8px;
   cursor: pointer;
-}
-
-button:hover {
-  background-color: #d9668a;
-}
-
-.error {
-  color: red;
-  margin-top: 8px;
 }
