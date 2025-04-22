@@ -1,13 +1,8 @@
 body {
   font-family: Arial, sans-serif;
-  background: #fff7f0;
-  color: #333;
-  padding: 20px;
   text-align: center;
-}
-
-h1 {
-  color: #ff4081;
+  background-color: #fff8f0;
+  padding: 20px;
 }
 
 .modal {
@@ -24,16 +19,27 @@ h1 {
 
 .modal-content {
   background: white;
-  padding: 20px;
-  border-radius: 10px;
+  padding: 30px;
+  border-radius: 12px;
+  text-align: center;
+  width: 300px;
 }
 
 button {
   padding: 10px 20px;
-  font-size: 16px;
-  background-color: #ff4081;
+  margin-top: 10px;
   border: none;
+  background-color: #f28ab2;
   color: white;
-  border-radius: 8px;
+  border-radius: 6px;
   cursor: pointer;
+}
+
+button:hover {
+  background-color: #d9668a;
+}
+
+.error {
+  color: red;
+  margin-top: 8px;
 }
