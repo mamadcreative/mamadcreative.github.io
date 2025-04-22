@@ -1,22 +1,91 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hadiah Ulang Tahun 🎉</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ucapan Ulang Tahun</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #fff;
+      text-align: center;
+      color: #333;
+    }
+
+    h1 {
+      color: #d63384;
+      font-size: 2em;
+      margin-top: 30px;
+    }
+
+    .modal {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .modal-content {
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+      width: 80%;
+      max-width: 400px;
+      text-align: center;
+      animation: fadeIn 0.5s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { transform: scale(0.9); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    button {
+      background-color: #ff4da6;
+      color: white;
+      border: none;
+      border-radius: 30px;
+      padding: 10px 25px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #e60073;
+    }
+
+    #mainContent {
+      display: none;
+      padding: 20px;
+    }
+
+    #questionSection {
+      display: none;
+      margin-top: 30px;
+      font-size: 16px;
+    }
+
+    #questionSection h3 {
+      color: #444;
+    }
+
+    input[type="radio"] {
+      margin-right: 10px;
+    }
+  </style>
 </head>
 <body>
-  <!-- PIN Verification -->
-  <div class="pin-section">
-    <input type="text" id="pin6" maxlength="1" oninput="moveFocus('pin6', null)" onkeydown="moveFocusOnBackspace(event, 'pin6', 'pin5')" />
-    <br />
-    <button onclick="checkPin()">Buka</button>
-    <div class="error" id="pinError"></div>
-  </div>
 
   <!-- Modal Musik -->
-  <div class="modal" id="musicModal" style="display:none">
+  <div class="modal" id="musicModal">
     <div class="modal-content">
       <h2>🎵 Musik Latar</h2>
       <p>Klik untuk memainkan musik spesial 🎶</p>
@@ -24,16 +93,47 @@
     </div>
   </div>
 
-  <!-- Konten Utama -->
+  <!-- Konten Ucapan -->
   <div id="mainContent">
     <h1>🎉 Selamat Ulang Tahun!</h1>
     <p>
-      Hari ini adalah hari istimewa untuk orang yang luar biasa. Semoga harimu dipenuhi dengan kebahagiaan, tawa, dan cinta. <br /><br />
-      Jangan lupa bahwa kamu sangat berharga dan dicintai. Terima kasih telah menjadi kamu. ❤️<br /><br />
+      Hari ini adalah hari istimewa untuk orang yang luar biasa. Semoga harimu dipenuhi dengan kebahagiaan, tawa, dan cinta. <br><br>
+      Jangan lupa bahwa kamu sangat berharga dan dicintai. Terima kasih telah menjadi kamu. ❤️<br><br>
       Nikmati hadiah kecil ini 🎁
     </p>
+
+    <!-- Pertanyaan -->
+    <div id="questionSection">
+      <h3>🎉 Suka dengan musiknya?</h3>
+      <form id="surveyForm">
+        <label><input type="radio" name="likeMusic" value="Ya" /> Ya</label><br />
+        <label><input type="radio" name="likeMusic" value="Tidak" /> Tidak</label><br /><br />
+        <button type="submit">Kirim</button>
+      </form>
+    </div>
   </div>
 
-  <script src="script.js"></script>
+  <!-- JavaScript -->
+  <script>
+    function startMusic() {
+      const audio = new Audio('music.mp3'); // Ganti dengan path file kamu
+      audio.play();
+      document.getElementById("musicModal").style.display = "none";
+      document.getElementById("mainContent").style.display = "block";
+      document.getElementById("questionSection").style.display = "block";
+    }
+
+    document.getElementById("surveyForm").addEventListener("submit", function (event) {
+      event.preventDefault();
+      const jawaban = document.querySelector('input[name="likeMusic"]:checked');
+      if (jawaban) {
+        alert("Terima kasih atas jawabannya: " + jawaban.value);
+        // Di sini nanti bisa ditambahkan logic untuk kirim ke Google Sheets
+      } else {
+        alert("Silakan pilih salah satu jawaban terlebih dahulu.");
+      }
+    });
+  </script>
+
 </body>
 </html>
