@@ -1,30 +1,27 @@
-function moveFocus(current, next) {
-  const currInput = document.getElementById(current);
-  if (currInput.value.length === 1 && next) {
-    document.getElementById(next).focus();
-  }
-}
+window.onload = function () {
+  const modal = document.getElementById('musicModal');
+  const mainContent = document.getElementById('mainContent');
+  const playButton = document.getElementById('playButton');
+  const audio = new Audio('music.mp3'); // Ganti dengan file musik kamu
 
-function moveFocusOnBackspace(event, current, prev) {
-  if (event.key === "Backspace" && !event.target.value && prev) {
-    document.getElementById(prev).focus();
-  }
-}
+  playButton.onclick = () => {
+    audio.play();
+    modal.style.display = 'none';
+    mainContent.style.display = 'block';
+  };
 
-function checkPin() {
-  const pin6 = document.getElementById("pin6").value;
-  const pinError = document.getElementById("pinError");
-
-  if (pin6 === "6") {
-    document.getElementById("musicModal").style.display = "flex";
-    pinError.textContent = "";
-  } else {
-    pinError.textContent = "Pin salah, coba lagi ya!";
-  }
-}
-
-function startMusic() {
-  const audio = new Audio("music.mp3");
-  audio.play();
-  document.getElementById("musicModal").style.display = "none";
-}
+  document.getElementById('surveyForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    const answer = document.querySelector('input[name=\"likeMusic\"]:checked');
+    if (answer) {
+      const sheetURL = 'https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec'; // Ganti dengan URL Google Apps Script kamu
+      fetch(sheetURL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: `likeMusic=${answer.value}`
+      });
+      alert('Terima kasih atas tanggapannya!');
+    }
+  });
+};
