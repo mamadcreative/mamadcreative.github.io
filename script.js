@@ -14,7 +14,7 @@ window.onload = function () {
     e.preventDefault();
     const answer = document.querySelector('input[name="likeMusic"]:checked');
     if (answer) {
-      const sheetURL = 'https://script.google.com/macros/s/YOUR_DEPLOYED_SCRIPT_ID/exec'; // GANTI
+      const sheetURL = 'https://script.google.com/macros/s/AKfycbwW8UpwXm8SlUUtYOYosoPvhMrUiaJMZcEuogbyPalssc23CHIq653keApD4YD-gFPOOw/exec'; // GANTI
       fetch(sheetURL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
