@@ -12,16 +12,20 @@ window.onload = function () {
 
   document.getElementById('surveyForm').addEventListener('submit', function (e) {
     e.preventDefault();
-    const answer = document.querySelector('input[name=\"likeMusic\"]:checked');
+    const answer = document.querySelector('input[name="likeMusic"]:checked');
     if (answer) {
-      const sheetURL = 'https://script.google.com/macros/s/AKfycbwWVOMm8hiLf96Le11egrxjB2OSZ1eLb3Pggw9jWPrMT4xGRT7AHlaGRCDVqknI6mrhuw/exec'; // Ganti dengan URL Google Apps Script kamu
+      const sheetURL = 'https://script.google.com/macros/s/YOUR_DEPLOYED_SCRIPT_ID/exec'; // GANTI
       fetch(sheetURL, {
         method: 'POST',
-        mode: 'no-cors',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: `likeMusic=${answer.value}`
+        body: `likeMusic=${encodeURIComponent(answer.value)}`
+      }).then(() => {
+        alert('Terima kasih atas tanggapannya!');
+      }).catch(err => {
+        alert('Terjadi kesalahan: ' + err.message);
       });
-      alert('Terima kasih atas tanggapannya!');
+    } else {
+      alert('Silakan pilih salah satu jawaban.');
     }
   });
 };
