@@ -14,7 +14,7 @@ window.onload = function () {
     e.preventDefault();
     const answer = document.querySelector('input[name=\"likeMusic\"]:checked');
     if (answer) {
-      const sheetURL = 'https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec'; // Ganti dengan URL Google Apps Script kamu
+      const sheetURL = 'https://script.google.com/macros/s/AKfycbwWVOMm8hiLf96Le11egrxjB2OSZ1eLb3Pggw9jWPrMT4xGRT7AHlaGRCDVqknI6mrhuw/exec'; // Ganti dengan URL Google Apps Script kamu
       fetch(sheetURL, {
         method: 'POST',
         mode: 'no-cors',
